@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CatInfo {
     private String id;
     private String text;
@@ -17,10 +21,17 @@ public class CatInfo {
         this.upvotes = upvotes;
     }
 
-    public CatInfo(String id, String text, String type, String user, Integer upvotes) {
+    @JsonCreator
+    public CatInfo(
+            @JsonProperty("id") String id,
+            @JsonProperty("text") String text,
+            @JsonProperty("type") String type,
+            @JsonProperty("user") String user,
+            @JsonProperty("upvotes") Integer upvotes) {
         this(id, text, type, user, upvotes != null ? upvotes.intValue() : 0);
     }
 
+    @JsonGetter("upvotes")
     public int getUpvotes() {
         return upvotes.intValue();
     }
